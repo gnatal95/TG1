@@ -1,74 +1,73 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CreateAsteroids : MonoBehaviour {
 
-    public int AsteroidCount = 10;
-    public bool Indestructible = false;
-    public bool Shielded = false;
-    public bool Explosive = false;
-    public float MinFieldX = 100f;
-    public float MaxFieldX = 200f;
-    public float MinFieldY = -100f;
-    public float MaxFieldY = 100f;
-    public float MinSize = 0.75f;
-    public float MaxSize = 0.75f;
-    public float MinSpeed = -5f;
-    public float MaxSpeed = 5f;
+	    public int AsteroidCount = 10;
+	    public bool Indestructible = false;
+	    public bool Shielded = false;
+	    public bool Explosive = false;
+	    public float mimFieldX = 100f;
+	    public float maxFieldX = 200f;
+	    public float minFieldY = -100f;
+	    public float maxFieldY = 100f;
+	    public float minSize = 0.75f;
+	    public float maxSize = 0.75f;
+	    public float minSpeed = -5f;
+	    public float maxSpeed = 5f;
 
 	// Use this for initialization
 	void Start () 
-    {
+	{
         //carrega a prefab asteroid com escudo
-        var asteroid = Resources.Load("Prefabs/Asteroid");
+        	var asteroid = Resources.Load("Prefabs/Asteroid");
 		//caso seja explosivo carrega a prefab do lava asteroid
-        if(Explosive)
-            asteroid = Resources.Load("Prefabs/Asteroid2");
+	        if(Explosive)
+        	    asteroid = Resources.Load("Prefabs/Asteroid2");
+	
+		AccelPerSize ();
+		SetAccel ();
 
-        accelPerSize();
-        setAccel();
+        	for (var i = 0; i < AsteroidCount; i++)
+        	{
+            	var x = Random.Range(mimFieldX, maxFieldX);
 
-        for (var i = 0; i < AsteroidCount; i++)
-        {
-            var x = Random.Range(MinFieldX, MaxFieldX);
+	        var y = Random.Range(minFieldY, maxFieldY);
+	
+        	var z = 0f;
 
-            var y = Random.Range(MinFieldY, MaxFieldY);
-
-            var z = 0f;
-
-            var position = new Vector3(x, y, z);
-
-            var rotation = new Quaternion(0f, 0f, 0f, 0f);
+	        var position = new Vector3(x, y, z);
+	
+       		var rotation = new Quaternion(0f, 0f, 0f, 0f);
 
 			//cria um clone de asteriod
-            var gameObject = (GameObject)Instantiate(asteroid, position, rotation);
+	        var gameObject = (GameObject)Instantiate(asteroid, position, rotation);
 
-            var scale = Random.Range(MinSize, MaxSize);
+        	var scale = Random.Range(minSize, maxSize);
 
-            gameObject.transform.localScale = new Vector3(scale, scale, scale);
+	        gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
-            var movement = gameObject.GetComponentInChildren<AsteroidMovement>();
+        	var movement = gameObject.GetComponentInChildren<AsteroidMovement>();
 
-            if (Indestructible) {
-                var ast = gameObject.GetComponentInChildren<AsteroidType>();
-                ast.indestructible = true;
-            }
-            if (Shielded) {
-                var shield = gameObject.transform.FindChild("Shield Asteroid");
+            	if (Indestructible) {
+                	var ast = gameObject.GetComponentInChildren<AsteroidType>();
+                	ast.indestructible = true;
+	        }
+        	if (Shielded) {
+                	var shield = gameObject.transform.FindChild("Shield Asteroid");
+	
+        	        shield.GetComponent<MeshRenderer>().enabled = true;
+	
+        	        shield.GetComponent<SphereCollider>().enabled = true;
+	        }	
+		if (Explosive) {
+                	var ast = gameObject.GetComponentInChildren<AsteroidType>();
+                	ast.explosive = true;
 
-                shield.GetComponent<MeshRenderer>().enabled = true;
+        	}
+		var mx = Random.Range(minSpeed, maxSpeed);
 
-                shield.GetComponent<SphereCollider>().enabled = true;
-            }
-            if (Explosive) {
-                var ast = gameObject.GetComponentInChildren<AsteroidType>();
-                ast.explosive = true;
-
-            }
-
-            var mx = Random.Range(MinSpeed, MaxSpeed);
-
-	        var my = Random.Range(MinSpeed, MaxSpeed);
+	        var my = Random.Range(minSpeed, maxSpeed);
 
 	        var mz = 0f;
 
@@ -88,55 +87,55 @@ public class CreateAsteroids : MonoBehaviour {
         }
 	}
 
-    private void accelPerSize()
+    private void AccelPerSize()
     {
         var controle = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<GameController>();
         int difficulty = controle.getDifficulty();
 
         var judge = GameObject.FindGameObjectWithTag("DDA").GetComponentInChildren<DDA>();
-        int size = judge.getSize();
+        int size = judge.GetSize();
 
         if (size == 1)
         {
             if (difficulty == 0) {
-                MaxSpeed = -4.0f;
-                MinSpeed = 4.0f;
+                maxSpeed = -4.0f;
+                minSpeed = 4.0f;
             }
             else if (difficulty == 1) {
-                MaxSpeed = -7.0f;
-                MinSpeed = 7.0f;
+                maxSpeed = -7.0f;
+                minSpeed = 7.0f;
             }
             else {
-                MinSpeed = 5.0f;
+                minSpeed = 5.0f;
             }
         }
         else if (size == -1)
         {
             if (difficulty == 0) {
-                MaxSpeed = -1.0f;
-                MinSpeed = 1.0f;
+                maxSpeed = -1.0f;
+                minSpeed = 1.0f;
             }
             else if (difficulty == 1) {
-                MaxSpeed = -2.0f;
-                MinSpeed = 2.0f;
+                maxSpeed = -2.0f;
+                minSpeed = 2.0f;
             }
             else {
-                MaxSpeed = 4.0f;
+                maxSpeed = 4.0f;
             }
         }
     }
 
 
-    private void setAccel(){
+    private void SetAccel(){
         float accelMinus = 0.5f;
 
         var controle = GameObject.FindGameObjectWithTag("GameController").GetComponentInChildren<GameController>();
-        int deathLimit = controle.getDeathLimit();
+        int deathLimit = controle.GetDeathLimit();
         int difficulty = controle.getDifficulty();
 
         var judge = GameObject.FindGameObjectWithTag("DDA").GetComponentInChildren<DDA>();
-        int numDeath = judge.getDeath();
-        int size = judge.getSize();
+        int numDeath = judge.GetDeath();
+        int size = judge.GetSize();
         int mult = (numDeath - deathLimit) / 2;
 
         if (numDeath >= deathLimit)
@@ -146,15 +145,15 @@ public class CreateAsteroids : MonoBehaviour {
                 if (size == 0) {
                     if (mult > 1)
                         mult = 1;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
-                    MinSpeed = MinSpeed + accelMinus + (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
+                    minSpeed = minSpeed + accelMinus + (mult * accelMinus);
                 }
                 else if (size == 1)
                 {
                     if (mult > 4)
                         mult = 4;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
-                    MinSpeed = MinSpeed + accelMinus + (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
+                    minSpeed = minSpeed + accelMinus + (mult * accelMinus);
                 }
             }
             else if (difficulty == 1)
@@ -163,15 +162,15 @@ public class CreateAsteroids : MonoBehaviour {
                 {
                     if (mult > 4)
                         mult = 4;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
-                    MinSpeed = MinSpeed + accelMinus + (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
+                    minSpeed = minSpeed + accelMinus + (mult * accelMinus);
                 }
                 else if (size == 1)
                 {
                     if (mult > 6)
                         mult = 6;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
-                    MinSpeed = MinSpeed + accelMinus + (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
+                    minSpeed = minSpeed + accelMinus + (mult * accelMinus);
                 }
             }
             else
@@ -180,13 +179,13 @@ public class CreateAsteroids : MonoBehaviour {
                 {
                     if (mult > 6)
                         mult = 6;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
                 }
                 else if (size == 1)
                 {
                     if (mult > 4)
                         mult = 4;
-                    MaxSpeed = MaxSpeed - accelMinus - (mult * accelMinus);
+                    maxSpeed = maxSpeed - accelMinus - (mult * accelMinus);
                 }
             }
         }
