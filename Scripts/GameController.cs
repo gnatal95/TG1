@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class GameController : MonoBehaviour
 {
@@ -112,7 +114,7 @@ public class GameController : MonoBehaviour
             var ship = GameObject.FindGameObjectWithTag("Player");
             Distancia = 500 - (int)ship.transform.position.x;
         }
-        if(Distancia>0)
+		if(Distancia>0)
             _distanciaText.text = "Distancia: " + Distancia;
         else 
             _distanciaText.text = "Entre no hiperespaco";
@@ -133,7 +135,7 @@ public class GameController : MonoBehaviour
         }
 
         JumpLevel();
-        HandleNextLevel();
+		HandleNextLevel();
     }
 
     private void JumpLevel() {
@@ -147,7 +149,7 @@ public class GameController : MonoBehaviour
         var udp = GameObject.FindGameObjectWithTag("UDP").GetComponentInChildren<UDPObj>();
         udp.sendData("5\n");
         
-        judge.timeclear();
+        judge.TimeClear();
 
         if (DateTime.Now.Subtract(_endTime).Seconds < 2)
             return;
@@ -181,49 +183,49 @@ public class GameController : MonoBehaviour
 
 
         
-        judge.resetd();
+        judge.Resetd();
         switch (Level)
         {
-            case 1:
-                if (Difficulty == 0)
-                    Application.LoadLevel("level 1 easy");
-                else if (Difficulty == 2)
-                    Application.LoadLevel("level 1 hard");
-                else
-                    Application.LoadLevel("level 1 normal");
-                break;
-            case 2:
-                if (Difficulty == 0)
-                    Application.LoadLevel("level 2 easy");
-                else if (Difficulty == 2)
-                    Application.LoadLevel("level 2 hard");
-                else
-                    Application.LoadLevel("level 2 normal");
-                break;
-            case 3:
-                if (Difficulty == 0)
-                    Application.LoadLevel("level 3 easy");
-                else if (Difficulty == 2)
-                    Application.LoadLevel("level 3 hard");
-                else
-                    Application.LoadLevel("level 3 normal");
-                break;
-            case 4:
-                if (Difficulty == 0)
-                    Application.LoadLevel("level 4 easy");
-                else if (Difficulty == 2)
-                    Application.LoadLevel("level 4 hard");
-                else
-                    Application.LoadLevel("level 4 normal");
-                break;
-            case 5:
-                if (Difficulty == 0)
-                    Application.LoadLevel("level 5 easy");
-                else if (Difficulty == 2)
-                    Application.LoadLevel("level 5 hard");
-                else
-                    Application.LoadLevel("level 5 normal");
-                break;
+			case 1:
+				if (Difficulty == 0)
+					SceneManager.LoadScene("level 1 easy",LoadSceneMode.Single);
+				else if (Difficulty == 2)
+					SceneManager.LoadScene("level 1 hard",LoadSceneMode.Single);
+				else
+					SceneManager.LoadScene("level 1 normal",LoadSceneMode.Single);
+				break;
+			case 2:
+				if (Difficulty == 0)
+					SceneManager.LoadScene("level 2 easy",LoadSceneMode.Single);
+				else if (Difficulty == 2)
+					SceneManager.LoadScene("level 2 hard",LoadSceneMode.Single);
+				else
+					SceneManager.LoadScene("level 2 normal",LoadSceneMode.Single);
+				break;
+			case 3:
+				if (Difficulty == 0)
+					SceneManager.LoadScene("level 3 easy",LoadSceneMode.Single);
+				else if (Difficulty == 2)
+					SceneManager.LoadScene("level 3 hard",LoadSceneMode.Single);
+				else
+					SceneManager.LoadScene("level 3 normal",LoadSceneMode.Single);
+				break;
+			case 4:
+				if (Difficulty == 0)
+					SceneManager.LoadScene("level 4 easy",LoadSceneMode.Single);
+				else if (Difficulty == 2)
+					SceneManager.LoadScene("level 4 hard",LoadSceneMode.Single);
+				else
+					SceneManager.LoadScene("level 4 normal",LoadSceneMode.Single);
+				break;
+			case 5:
+				if (Difficulty == 0)
+					SceneManager.LoadScene("level 5 easy",LoadSceneMode.Single);
+				else if (Difficulty == 2)
+					SceneManager.LoadScene("level 5 hard",LoadSceneMode.Single);
+				else
+					SceneManager.LoadScene("level 5 normal",LoadSceneMode.Single);
+				break;
                     
         }
         
@@ -308,7 +310,7 @@ public class GameController : MonoBehaviour
         if (!dead)
         {
             dead = true;
-            god.kill(); 
+            god.Kill(); 
         }
 
         
@@ -318,54 +320,54 @@ public class GameController : MonoBehaviour
             dead = !dead;
             switch (Level)
             {
-                case 0:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 0 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 0 hard");
-                    else
-                        Application.LoadLevel("level 0");
-                    break;
-                case 1:
-                    if(Difficulty==0)
-                        Application.LoadLevel("level 1 easy");
-                    else if(Difficulty==2)
-                        Application.LoadLevel("level 1 hard");
-                    else
-                        Application.LoadLevel("level 1 normal");
-                    break;
-                case 2:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 2 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 2 hard");
-                    else
-                        Application.LoadLevel("level 2 normal");
-                    break;
-                case 3:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 3 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 3 hard");
-                    else
-                        Application.LoadLevel("level 3 normal");
-                    break;
-                case 4:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 4 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 4 hard");
-                    else
-                        Application.LoadLevel("level 4 normal");
-                    break;
-                case 5:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 5 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 5 hard");
-                    else
-                        Application.LoadLevel("level 5 normal");
-                    break;
+				case 0:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 0 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 0 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 0",LoadSceneMode.Single);
+					break;
+				case 1:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 1 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 1 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 1 normal",LoadSceneMode.Single);
+					break;
+				case 2:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 2 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 2 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 2 normal",LoadSceneMode.Single);
+					break;
+				case 3:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 3 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 3 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 3 normal",LoadSceneMode.Single);
+					break;
+				case 4:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 4 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 4 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 4 normal",LoadSceneMode.Single);
+					break;
+				case 5:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 5 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 5 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 5 normal",LoadSceneMode.Single);
+					break;
             }
         }
     }
@@ -394,8 +396,7 @@ public class GameController : MonoBehaviour
     private void HandleNextLevel()
     {
         var judge = GameObject.FindGameObjectWithTag("DDA").GetComponentInChildren<DDA>();
-
-        if (!_isGameOver || !_isGameWin)
+        if (!_isGameOver && !_isGameWin)
             return;
 
         var udp = GameObject.FindGameObjectWithTag("UDP").GetComponentInChildren<UDPObj>();
@@ -407,12 +408,13 @@ public class GameController : MonoBehaviour
 
 
         string emotion = udp.getLatestUDPPacket();
-        if (judge.getDDA() < 2)
-        {
-            if (!emotion.Equals("stressed") && !emotion.Equals("bored") && !emotion.Equals("challenged"))
-                return;
-        }
-        judge.timeclear();
+        // o codigo comentado abaixo so funciona com a presenca do bitalino
+		//if (judge.GetDDA() < 2)
+        //{
+         //   if (!emotion.Equals("stressed") && !emotion.Equals("bored") && !emotion.Equals("challenged"))
+          //      return;
+       // }
+        judge.TimeClear();
 
 
 
@@ -445,32 +447,32 @@ public class GameController : MonoBehaviour
             _copyright.enabled = true;
         }
 
-        int numDeaths = judge.getDeath();
+        int numDeaths = judge.GetDeath();
         if(DDA==false){ 
         //DDA PERFOMANCE+EMOCAO
-            if (judge.getDDA() == 0) {
+            if (judge.GetDDA() == 0) {
                 if (emotion.Equals("stressed"))
                 {
                     if (Difficulty == 0)//EASY
                     {
-                        judge.setSize(-1);
+                        judge.SetSize(-1);
 
                     }
                     else if (Difficulty == 1)//NORMAL
                     {
                         if (numDeaths <= DeathHard)//died not enough
                         {
-                            judge.setSize(-1);
+                            judge.SetSize(-1);
                         }
                         else if (numDeaths > DeathNormal)//died a lot
                         {
                             Difficulty = 0;
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         }
                         else//died enough
                         {
                             Difficulty = 0;
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
                     }
                     else //HARD
@@ -478,12 +480,12 @@ public class GameController : MonoBehaviour
                         if (numDeaths <= DeathHard)//died enough
                         {
                             Difficulty = 1;
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
                         else//died a lot
                         {
                             Difficulty = 1;
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         }
                     }
                 }
@@ -492,33 +494,33 @@ public class GameController : MonoBehaviour
                     if (Difficulty == 0)//EASY
                     {
                         if (numDeaths < DeathEasy)
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         else
-                            judge.setSize(1);
+                            judge.SetSize(1);
                     }
                     else if (Difficulty == 1)//NORMAL
                     {
                         if (numDeaths <= DeathHard)//died not enough
                         {
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
                         else if (numDeaths < DeathEasy)//died enough
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         else//died a lot
                         {
                             Difficulty = 0;
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
 
                     }
                     else //HARD
                     {
                         if (numDeaths <= DeathHard)//died not enough
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         else//died a lot
                         {
                             Difficulty = 1;
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
 
                     }
@@ -529,12 +531,12 @@ public class GameController : MonoBehaviour
                     {
                         if (numDeaths < DeathNormal)//died not enough
                         {
-                            judge.setSize(0);
+                            judge.SetSize(0);
                             Difficulty = 1;
                         }
                         else//died enough
                         {
-                            judge.setSize(-1);
+                            judge.SetSize(-1);
                             Difficulty = 1;
                         }
                     }
@@ -543,27 +545,27 @@ public class GameController : MonoBehaviour
                         if (numDeaths <= DeathHard)//died not enough
                         {
                             Difficulty = 2;
-                            judge.setSize(0);
+                            judge.SetSize(0);
                         }
                         else if (numDeaths < DeathEasy)//died enough
                         {
                             Difficulty = 2;
-                            judge.setSize(-1);
+                            judge.SetSize(-1);
                         }
                         else//died a lot
                         {
                             Difficulty = 1;
-                            judge.setSize(1);
+                            judge.SetSize(1);
                         }
                     }
                     else //HARD
                     {
-                        judge.setSize(1);
+                        judge.SetSize(1);
                     }
                 }
             }
             //DDA EMOTIVO
-            else if (judge.getDDA() == 1) {
+            else if (judge.GetDDA() == 1) {
                 if (emotion.Equals("bored"))
                 {
                     if (Difficulty < 2)
@@ -602,49 +604,57 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            judge.resetd();
+            judge.Resetd();
             switch (Level)
             {
-                case 1:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 1 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 1 hard");
-                    else
-                        Application.LoadLevel("level 1 normal");
-                    break;
-                case 2:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 2 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 2 hard");
-                    else
-                        Application.LoadLevel("level 2 normal");
-                    break;
-                case 3:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 3 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 3 hard");
-                    else
-                        Application.LoadLevel("level 3 normal");
-                    break;
-                case 4:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 4 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 4 hard");
-                    else
-                        Application.LoadLevel("level 4 normal");
-                    break;
-                case 5:
-                    if (Difficulty == 0)
-                        Application.LoadLevel("level 5 easy");
-                    else if (Difficulty == 2)
-                        Application.LoadLevel("level 5 hard");
-                    else
-                        Application.LoadLevel("level 5 normal");
-                    break;
+				case 0:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 0 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 0 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 0",LoadSceneMode.Single);
+					break;
+				case 1:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 1 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 1 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 1 normal",LoadSceneMode.Single);
+					break;
+				case 2:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 2 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 2 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 2 normal",LoadSceneMode.Single);
+					break;
+				case 3:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 3 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 3 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 3 normal",LoadSceneMode.Single);
+					break;
+				case 4:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 4 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 4 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 4 normal",LoadSceneMode.Single);
+					break;
+				case 5:
+					if (Difficulty == 0)
+						SceneManager.LoadScene("level 5 easy",LoadSceneMode.Single);
+					else if (Difficulty == 2)
+						SceneManager.LoadScene("level 5 hard",LoadSceneMode.Single);
+					else
+						SceneManager.LoadScene("level 5 normal",LoadSceneMode.Single);
+					break;
                     //case 1:
                     //    //aplicacao do dda usando mortes,tempo e estado
                     //    Application.LoadLevel("level 1 normal");
@@ -721,7 +731,7 @@ public class GameController : MonoBehaviour
         _endTime = DateTime.Now;
     }
 
-    public int getDeathLimit()
+    public int GetDeathLimit()
     {
         return DeathLimit;
     }
