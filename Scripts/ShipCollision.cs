@@ -33,15 +33,16 @@ public class ShipCollision : MonoBehaviour
 
         var rotation = Quaternion.identity;
 
-        if (!collider.gameObject.tag.Equals("AsteroidEx"))
-            Instantiate(_explosion, asteroidPosition, rotation);
 
         Instantiate(_bigExplosion, shipPosition, rotation);
 
         var mainAudio = GameObject.FindGameObjectWithTag("MainAudio");
 
-        if (!collider.gameObject.tag.Equals("AsteroidEx"))
-            Destroy(collider.gameObject);
+		if (!collider.gameObject.tag.Equals ("AsteroidEx")) {
+			Instantiate (_explosion, asteroidPosition, rotation);
+			Destroy (collider.gameObject);
+		
+		}
 
         Destroy(gameObject);
 

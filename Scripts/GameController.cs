@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using Assets.Scripts;
 using UnityEngine;
@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
     void Start ()
 	{
         if (Input.GetKey(KeyCode.Alpha1))
-            Application.LoadLevel("level 0");
+			SceneManager.LoadScene("level 0",LoadSceneMode.Single);
 
 	    _startMenu = GameObject.FindGameObjectWithTag("StartMenu");
 
@@ -409,6 +409,7 @@ public class GameController : MonoBehaviour
 
         string emotion = udp.getLatestUDPPacket();
         // o codigo comentado abaixo so funciona com a presenca do bitalino
+		//deve ser descomentado assim que possivel
 		//if (judge.GetDDA() < 2)
         //{
          //   if (!emotion.Equals("stressed") && !emotion.Equals("bored") && !emotion.Equals("challenged"))

@@ -9,13 +9,15 @@ public class ShipMovement : MonoBehaviour
     public float RotationSpeed = 100f;
     public float WarpSpeed = 1000f;
     public float MaxImpulseSpeed = 10f;
+	public float _speed = 0.0f;
     public bool HasWarp = false;
     
+	private float lateralLimit = 70;
+	private float angleLimit = 180;
     private GameController _controller;
     private CameraChase _cameraChase;
     private GameObject _mainAudio;
     private AudioSource _warpAudio;
-    public float _speed = 0.0f;
     private float _warpTime = 0;
     private bool _isWarping = false;
     
@@ -49,14 +51,14 @@ public class ShipMovement : MonoBehaviour
 
     private void Move()
     {
-        if (transform.position.y > 70)
+		if (transform.position.y > lateralLimit)
         {
-            if (transform.rotation.eulerAngles.z > 180)
+			if (transform.rotation.eulerAngles.z > angleLimit)
                 gameObject.transform.Translate(_speed * Time.deltaTime, 0, 0);
         }
-        else if (transform.position.y < -70)
+		else if (transform.position.y < -lateralLimit)
         {
-            if (transform.rotation.eulerAngles.z < 180)
+			if (transform.rotation.eulerAngles.z < angleLimit)
                 gameObject.transform.Translate(_speed * Time.deltaTime, 0, 0);
         }
         else
@@ -172,10 +174,13 @@ public class ShipMovement : MonoBehaviour
 
         foreach (var warpBubble in warpBubbles)
         {
-            warpBubble.emissionRate = Math.Abs(_speed);
-
-            if (HasWarp)
-                warpBubble.startColor = new Color(0, 200, 255);   
+			var em = warpBubble.emission.rateOverDistance;
+			em.constantMax = Math.Abs(_speed);;
+			em.constantMin = Math.Abs(_speed);;
+			if (HasWarp) {
+				var mainColor = warpBubble.main;
+				mainColor.startColor = new Color (0, 200, 255);   
+			}
         }        
     }
 }

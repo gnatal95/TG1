@@ -1,71 +1,72 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CreateAsteroids : MonoBehaviour {
 
-	    public int AsteroidCount = 10;
-	    public bool Indestructible = false;
-	    public bool Shielded = false;
-	    public bool Explosive = false;
-	    public float mimFieldX = 100f;
-	    public float maxFieldX = 200f;
-	    public float minFieldY = -100f;
-	    public float maxFieldY = 100f;
-	    public float minSize = 0.75f;
-	    public float maxSize = 0.75f;
-	    public float minSpeed = -5f;
-	    public float maxSpeed = 5f;
+    public int AsteroidCount = 10;
+    public bool Indestructible = false;
+    public bool Shielded = false;
+    public bool Explosive = false;
+    public float mimFieldX = 100f;
+    public float maxFieldX = 200f;
+    public float minFieldY = -100f;
+    public float maxFieldY = 100f;
+    public float minSize = 0.75f;
+    public float maxSize = 0.75f;
+    public float minSpeed = -5f;
+    public float maxSpeed = 5f;
 
 	// Use this for initialization
 	void Start () 
-	{
+    {
         //carrega a prefab asteroid com escudo
-        	var asteroid = Resources.Load("Prefabs/Asteroid");
+        var asteroid = Resources.Load("Prefabs/Asteroid");
 		//caso seja explosivo carrega a prefab do lava asteroid
-	        if(Explosive)
-        	    asteroid = Resources.Load("Prefabs/Asteroid2");
-	
+        if(Explosive)
+            asteroid = Resources.Load("Prefabs/Asteroid2");
+
 		AccelPerSize ();
 		SetAccel ();
 
-        	for (var i = 0; i < AsteroidCount; i++)
-        	{
-            	var x = Random.Range(mimFieldX, maxFieldX);
+        for (var i = 0; i < AsteroidCount; i++)
+        {
+            var x = Random.Range(mimFieldX, maxFieldX);
 
-	        var y = Random.Range(minFieldY, maxFieldY);
-	
-        	var z = 0f;
+            var y = Random.Range(minFieldY, maxFieldY);
 
-	        var position = new Vector3(x, y, z);
-	
-       		var rotation = new Quaternion(0f, 0f, 0f, 0f);
+            var z = 0f;
+
+            var position = new Vector3(x, y, z);
+
+            var rotation = new Quaternion(0f, 0f, 0f, 0f);
 
 			//cria um clone de asteriod
-	        var gameObject = (GameObject)Instantiate(asteroid, position, rotation);
+            var gameObject = (GameObject)Instantiate(asteroid, position, rotation);
 
-        	var scale = Random.Range(minSize, maxSize);
+            var scale = Random.Range(minSize, maxSize);
 
-	        gameObject.transform.localScale = new Vector3(scale, scale, scale);
+            gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
-        	var movement = gameObject.GetComponentInChildren<AsteroidMovement>();
+            var movement = gameObject.GetComponentInChildren<AsteroidMovement>();
 
-            	if (Indestructible) {
-                	var ast = gameObject.GetComponentInChildren<AsteroidType>();
-                	ast.indestructible = true;
-	        }
-        	if (Shielded) {
-                	var shield = gameObject.transform.FindChild("Shield Asteroid");
-	
-        	        shield.GetComponent<MeshRenderer>().enabled = true;
-	
-        	        shield.GetComponent<SphereCollider>().enabled = true;
-	        }	
-		if (Explosive) {
-                	var ast = gameObject.GetComponentInChildren<AsteroidType>();
-                	ast.explosive = true;
+            if (Indestructible) {
+                var ast = gameObject.GetComponentInChildren<AsteroidType>();
+                ast.indestructible = true;
+            }
+            if (Shielded) {
+                var shield = gameObject.transform.FindChild("Shield Asteroid");
 
-        	}
-		var mx = Random.Range(minSpeed, maxSpeed);
+                shield.GetComponent<MeshRenderer>().enabled = true;
+
+                shield.GetComponent<SphereCollider>().enabled = true;
+            }
+            if (Explosive) {
+                var ast = gameObject.GetComponentInChildren<AsteroidType>();
+                ast.explosive = true;
+
+            }
+
+            var mx = Random.Range(minSpeed, maxSpeed);
 
 	        var my = Random.Range(minSpeed, maxSpeed);
 
